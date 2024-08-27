@@ -1,0 +1,296 @@
+:root {
+  --gem-version-color: #a6aab2;
+}
+
+.gem__version {
+  position: relative;
+  color: var(--gem-version-color); }
+  @media (max-width: 929px) {
+    .gem__version {
+      top: 5px;
+      font-size: 20px; } }
+  @media (min-width: 930px) {
+    .gem__version {
+      top: 10px;
+      font-size: 42px; } }
+
+.gem__intro, .gem__install {
+  margin-bottom: 32px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #c1c4ca; }
+
+.gem__desc {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5; }
+
+.gem__members {
+  padding-top: 30px;
+  border-top: 1px solid #c1c4ca;
+  clear: both; }
+  @media (max-width: 779px) {
+    .gem__members {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      overflow: auto;
+      border-bottom: 1px solid #c1c4ca; } }
+
+.owners {
+  clear: both;
+  margin-bottom: -30px; }
+
+.gem__sha {
+  margin-top: 16px; }
+
+.gem__expiry {
+  margin-top: 16px; }
+
+.gem__ghbtn {
+    margin-bottom: 15px; }
+
+.gem__users {
+  margin-top: 16px; }
+  .gem__users img {
+    margin-right: 12px;
+    margin-bottom: 12px;
+    height: 32px;
+    width: 32px;
+    border-radius: 16px; }
+  .gem__users a:hover:before {
+    content: "";
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    border-radius: 16px;
+    background-color: #e9573f;
+    opacity: .5; }
+
+.gem__users__mfa-text {
+  color: #e9573f;
+}
+.gem__downloads-wrap {
+  margin-bottom: 30px; }
+
+.gem__downloads__heading {
+  margin-bottom: 6px; }
+
+.gem__downloads {
+  margin-bottom: 20px;
+  display: block;
+  font-weight: 800;
+  font-size: 24px; }
+
+.gem__see-all-versions {
+  font-style: italic;
+  display: inline-block;
+  padding-bottom: 10px; }
+
+.gem__ruby-version__heading {
+  margin-bottom: 10px; }
+
+.gem__ruby-version {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  display: block;
+  font-weight: 800;
+  font-size: 18px;
+  color: #141c22; }
+
+.gem__rubygem-version-age {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  display: block;
+  font-weight: 800;
+  font-size: 14px;
+  color: #141c22; }
+
+.gem__code-wrap {
+  margin-top: 12px;
+  position: relative;
+  width: 100%;
+  border: 1px solid #141c22;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.gem__code {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 1px;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "courier", monospace;
+  font-size: 12px;
+  line-height: 30px;
+  text-transform: none;
+  white-space: nowrap;
+  color: #141c22;
+  -moz-appearance: none;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold; }
+
+.gem__code.multiline {
+  line-height: inherit;
+  white-space: pre-wrap;
+  border-radius: 0; }
+
+  .gem__code::-webkit-scrollbar {
+    display: none; }
+
+.gem__code__icon {
+  padding-left: 2px;
+  height: 100%;
+  width: 30px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background-color: #141c22;
+  font-family: "icomoon";
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer; }
+  .gem__code__icon:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    height: 100%;
+    width: 10px;
+    background-image: linear-gradient(to right, transparent 0%, white 100%); }
+
+.gem__code__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  border: #c1c4ca 1px solid;
+  border-bottom: 0; }
+
+.gem__code__header .gem__code__icon {
+  position: inherit;
+  padding: .125rem;
+  width: 40px; }
+
+.gem__code__icon.static {
+  position: static; }
+
+.gem__code__tooltip--copy,
+.gem__code__tooltip--copied {
+  display: none; }
+
+.clipboard-is-hover,
+.clipboard-is-active {
+  display: block;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  z-index: 1;
+  border-radius: 6px;
+  background-color: #141c22;
+  text-transform: none;
+  line-height: 30px;
+  text-align: center;
+  color: #ffffff; }
+  .clipboard-is-hover:before,
+  .clipboard-is-active:before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    right: 8px;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #141c22; }
+
+.gem__link:before {
+  margin-right: 16px; }
+
+.gem__link__verified:after {
+  margin-left: 8px;
+  font-size: .75rem;
+  content: "✓"; }
+
+.gem__versions-wrap {
+  margin-bottom: 70px;
+  overflow: auto; }
+
+.gem__versions {
+  margin-bottom: 12px; }
+
+.gem__version__date {
+  color: var(--gem-version-color); }
+
+.gem__version__date.tooltip__text {
+  color: var(--gem-version-color); }
+
+.gem__versions-wrap {
+  overflow: auto; }
+
+.gem__version__date {
+  font-size: 15px; }
+
+.gem__version-wrap {
+  font-weight: 800; }
+  .gem__version-wrap a.t-list__item {
+    display: inline-block; }
+  .gem__version-wrap .gem__version__date {
+    font-weight: 400; }
+
+.gem__requirement-wrap {
+    line-height: inherit; }
+.gem__requirement-wrap a.t-list__item {
+    display: inline-block; }
+
+.gem__unregistered {
+  color: var(--gem-version-color);
+  cursor: help;
+}
+
+.gem__navigation {
+  display: inline-block;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.gem__navigation a {
+  color: #9da2ab;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition-duration: 0.25s;
+  transition-property: color;
+  outline: none;
+}
+
+.gem__navigation a:hover, .gem__navigation a:focus, .gem__navigation a:active {
+  color: #141c22;
+}
+
+.gem__previous__version.disabled:hover, .gem__next__version.disabled:hover {
+  color: #9da2ab;
+}
+
+.gem__next__version {
+  float: right;
+}
+
+.gem__previous__version {
+  float: left;
+}
+
+.gem__dependencies:not(:first-of-type) {
+  margin-top: 36px;
+}
