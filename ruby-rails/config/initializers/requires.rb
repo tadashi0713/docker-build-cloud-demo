@@ -1,7 +1,0 @@
-require 'rdoc/markup'
-require 'rdoc/markup/to_html'
-require 'patterns'
-require 'active_support/builder'
-require 'rack/rewindable_input'
-require 'elastic_searcher'
-require 'github_secret_scanning'

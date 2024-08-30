@@ -1,4 +1,0 @@
-Hi <%= @user.handle %>
-
-<%= t("mailer.email_confirmation.welcome_message") %>
-<%= update_email_confirmations_url(token: @user.confirmation_token.html_safe) %>

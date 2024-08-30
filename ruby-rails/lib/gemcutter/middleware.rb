@@ -1,2 +1,0 @@
-module Gemcutter::Middleware
-end
