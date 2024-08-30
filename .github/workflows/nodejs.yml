@@ -1,4 +1,4 @@
-name: Ruby Rails
+name: Node.js
 
 on: push
 
@@ -8,4 +8,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build ./ruby-rails --tag ruby-rails:$(date +%s)
+      run: docker build ./nodejs --tag nodejs:$(date +%s)
