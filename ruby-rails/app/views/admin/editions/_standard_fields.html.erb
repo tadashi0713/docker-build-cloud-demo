@@ -1,0 +1,157 @@
+<div class="<%= "right-to-left" if edition.rtl? %>">
+  <%= render "subtype_fields", form: form, edition: form.object %>
+  <%= render "locale_fields", form: form, edition: edition %>
+  <%= form.hidden_field :lock_version %>
+
+  <%= render "govuk_publishing_components/components/heading", {
+    text: "Content",
+    font_size: "l",
+    margin_bottom: 6,
+  } %>
+
+  <div class="govuk-!-margin-bottom-6 js-locale-switcher-field">
+    <%= render "govuk_publishing_components/components/character_count", {
+      textarea: {
+        label: {
+          text: "Title (required)",
+          heading_size: "m",
+        },
+        name: "edition[title]",
+        value: edition.title,
+        error_items: errors_for(edition.errors, :title),
+        right_to_left: form.object.translation_rtl?,
+        right_to_left_help: false,
+        rows: 1,
+      },
+      id: "edition_title",
+      maxlength: 65,
+    } %>
+  </div>
+
+  <% if edition.document&.slug.present? %>
+    <div class="app-view-edit-edition__page-address govuk-!-margin-bottom-6">
+      <%= render "govuk_publishing_components/components/heading", {
+        text: "Page address",
+        heading_level: 3,
+        font_size: "m",
+        margin_bottom: 2,
+      } %>
+
+      <%= render "govuk_publishing_components/components/hint", {
+        text: edition.public_url,
+      } %>
+    </div>
+  <% end %>
+
+  <div class="js-locale-switcher-field">
+    <%= render "govuk_publishing_components/components/character_count", {
+      textarea: {
+        label: {
+          text: "Summary" + "#{' (required)' if form.object.summary_required?}",
+          heading_size: "m",
+        },
+        name: "edition[summary]",
+        value: edition.summary,
+        rows: 4,
+        error_items: errors_for(edition.errors, :summary),
+        right_to_left: form.object.translation_rtl?,
+        right_to_left_help: false,
+        margin_bottom: 8,
+      },
+      id: "edition_summary",
+      maxlength: 160,
+    } %>
+  </div>
+
+  <div class="govuk-!-margin-bottom-8 js-locale-switcher-field">
+    <% if Flipflop.govspeak_visual_editor? && current_user.can_see_visual_editor_private_beta? && form.object.visual_editor %>
+      <%= render "components/visual_editor", {
+        label: {
+          text: "Body" + "#{' (required)' if form.object.body_required?}",
+          heading_size: "m",
+        },
+        name: "edition[body]",
+        id: "edition_body",
+        value: edition.body,
+        rows: 20,
+        error_items: errors_for(edition.errors, :body),
+        right_to_left: form.object.translation_rtl?,
+        data_attributes: {
+          image_ids: edition.images.map { |img| img[:id] }.to_json,
+          attachment_ids: edition.allows_inline_attachments? ? edition.attachments.map(&:id) : [],
+          alternative_format_provider_id: (edition.alternative_format_provider_id || current_user.organisation.try(:id)),
+        },
+        hidden_field_name: "edition[visual_editor]",
+      } %>
+    <% else %>
+      <%= render "components/govspeak_editor", {
+        label: {
+          text: "Body" + "#{' (required)' if form.object.body_required?}",
+          heading_size: "m",
+        },
+        name: "edition[body]",
+        id: "edition_body",
+        value: edition.body,
+        rows: 20,
+        error_items: errors_for(edition.errors, :body),
+        right_to_left: form.object.translation_rtl?,
+        data_attributes: {
+          image_ids: edition.images.map { |img| img[:id] }.to_json,
+          attachment_ids: edition.allows_inline_attachments? ? edition.attachments.map(&:id) : [],
+          alternative_format_provider_id: (edition.alternative_format_provider_id || current_user.organisation.try(:id)),
+        },
+      } %>
+      <%= hidden_field_tag "edition[visual_editor]", false %>
+    <% end %>
+  </div>
+
+  <% if !edition.new_record? && @edition.versioning_completed? %>
+    <%= render "govuk_publishing_components/components/inset_text", {
+      } do %>
+      <p class="govuk-body">
+        <%= link_to("Preview on website (opens in new tab)",
+        @edition.public_url(draft: true, locale: @edition.primary_locale),
+        class: "govuk-link",
+        target: "_blank",
+        rel: "noopener") %>
+      </p>
+      <p class="govuk-body">
+        To preview your document on GOV.UK you must save it first.
+      </p>
+    <% end %>
+  <% end %>
+
+  <%= render "additional_significant_fields", form: form, edition: form.object %>
+
+  <% if edition.document&.live? && edition.can_be_marked_political? && can?(:mark_political, edition) %>
+    <div class="govuk-!-margin-bottom-8">
+      <%= form.hidden_field :political, value: "0" %>
+
+      <%= render "govuk_publishing_components/components/checkboxes", {
+        name: "edition[political]",
+        id: "edition_political",
+        heading: "Political",
+        heading_size: "l",
+        no_hint_text: true,
+        error: errors_for_input(edition.errors, :political),
+        items: [
+          {
+            label: "Associate with government of the time (currently set to #{edition.government&.name}).",
+            value: "1",
+            checked: edition.political,
+          },
+        ],
+      } %>
+
+      <p class="govuk-body"><%= link_to "Read the history mode guidance", "https://www.gov.uk/guidance/how-to-publish-on-gov-uk/creating-and-updating-pages#history-mode", class: "govuk-link" %> for more information as to what this means.</p>
+    </div>
+  <% end %>
+</div>
+
+<%= render Admin::Editions::FirstPublishedAtComponent.new(
+  edition:,
+  previously_published: params.dig("edition", "previously_published") == "true" || edition.previously_published == true,
+  year: @edition_params.try(:dig, "first_published_at(1i)") || edition.first_published_at&.year,
+  month: @edition_params.try(:dig, "first_published_at(2i)") || edition.first_published_at&.month,
+  day: @edition_params.try(:dig, "first_published_at(3i)") || edition.first_published_at&.day,
+) %>

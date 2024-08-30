@@ -1,0 +1,38 @@
+ <li class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <% if image.image_data&.all_asset_variants_uploaded? %>
+      <img src="<%= image.url %>" alt="<%= preview_alt_text %>" class="app-view-edition-resource__preview">
+    <% else %>
+      <span class="govuk-tag govuk-tag--green">Processing</span>
+    <% end %>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><strong>Caption: </strong><%= caption %></p>
+    <p class="govuk-body"><strong>Alt text: </strong><%= alt_text %></p>
+    <%= render "govuk_publishing_components/components/copy_to_clipboard", {
+      label: tag.strong("Markdown code:"),
+      copyable_content: image_markdown,
+      button_text: "Copy Markdown",
+    } %>
+  </div>
+
+  <div class="app-view-edition-resource__actions govuk-grid-column-full govuk-button-group govuk-!-margin-top-4">
+    <%= link_to("Edit details", edit_admin_edition_image_path(edition, image), class: "govuk-link govuk-!-margin-top-2 app-view-edition-resource__actions__link") %>
+    <%= link_to("Delete image", confirm_destroy_admin_edition_image_path(edition, image), class: "govuk-link gem-link--destructive govuk-!-margin-top-2 app-view-edition-resource__actions__link") %>
+
+    <% if can_be_custom_lead_image? %>
+      <%= form_with url: admin_edition_lead_image_path(edition, image), method: :patch do |form| %>
+        <%= render "govuk_publishing_components/components/button", {
+          text: "Select as lead image",
+          secondary_solid: true,
+          margin_bottom: 4,
+        } %>
+      <% end %>
+    <% end %>
+  </div>
+</li>
+
+<% unless last_image %>
+  <li aria-hidden="true"><hr class="app-view-edition-resource__section-break govuk-section-break govuk-section-break--visible"></li>
+<% end %>

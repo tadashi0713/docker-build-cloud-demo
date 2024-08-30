@@ -1,0 +1,28 @@
+<% show_feedback_banner ||= true %>
+
+<% if t('admin.whats_new.show_banner') %>
+  <%= render "govuk_publishing_components/components/phase_banner", {
+      phase: "What's new",
+      message: sanitize("Improvements to the editor workflow -
+        #{
+          link_to(
+            "read more about the changes",
+            admin_whats_new_path,
+            {
+              class: "govuk-link",
+            },
+          )
+        }.", attributes: %w(class href)),
+    } %>
+<% elsif show_feedback_banner %>
+  <%= render "govuk_publishing_components/components/phase_banner", {
+      phase: "Feedback",
+      message: mail_to(
+        "publishing-service-feedback@digital.cabinet-office.gov.uk",
+        "Give feedback on the recent changes to Whitehall",
+        {
+          class: "govuk-link",
+        },
+      ),
+    } %>
+<% end %>

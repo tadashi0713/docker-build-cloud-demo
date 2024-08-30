@@ -1,0 +1,96 @@
+<% environment = GovukPublishingComponents::AppHelpers::Environment.current_acceptance_environment %>
+
+<% if user_signed_in? %>
+  <% content_for :head do %>
+    <meta name="govuk:components_gem_version" content="<%= GovukPublishingComponents::VERSION %>">
+    <%= javascript_include_tag "admin/domain-config" %>
+    <%= javascript_include_tag "govuk_publishing_components/load-analytics" %>
+  <% end %>
+<% end %>
+
+<% sanitized_title = sanitize((yield(:page_title).presence || yield(:title))) %>
+
+<%= render "govuk_publishing_components/components/layout_for_admin",
+           product_name: "Whitehall Publisher",
+           environment: environment,
+           browser_title: ("Error: " if yield(:error_summary).present?).to_s + sanitized_title do %>
+
+  <div data-module="GA4PageViewTracking" data-attributes='<%= track_analytics_data_on_load(sanitized_title) %>'></div>
+
+  <%= render "govuk_publishing_components/components/skip_link" %>
+
+  <%= render partial: "shared/header" %>
+
+  <div class="govuk-width-container" data-module="ga4-event-tracker ga4-paste-tracker">
+    <%= render "shared/phase_banner", {
+      show_feedback_banner: t("admin.feedback.show_banner"),
+    } %>
+
+    <%= yield(:back_link) %>
+    <%= yield(:breadcrumbs) %>
+
+    <main class="govuk-main-wrapper<%= " govuk-main-wrapper--l" if yield(:back_link).blank? && yield(:breadcrumbs).blank? %>" id="main-content" role="main">
+
+      <%= render Admin::FlashNoticeComponent.new(message: flash[:notice], html_safe: flash["html_safe"]) if flash[:notice] %>
+      <%= render Admin::FlashAlertComponent.new(message: flash[:alert], html_safe: flash["html_safe"]) if flash[:alert] && yield(:error_summary).blank? %>
+
+      <% column_width = yield(:page_full_width).present? ? "full" : "two-thirds" %>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-<%= column_width %>">
+          <%= yield(:error_summary) %>
+        </div>
+      </div>
+
+      <% if yield(:error_summary).blank? %>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-<%= column_width %>">
+            <%= yield(:banner) %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if yield(:title).present? %>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-<%= column_width %>">
+            <%= render "govuk_publishing_components/components/title", {
+              context: yield(:context),
+              title: yield(:title),
+              margin_top: 0,
+              margin_bottom: yield(:title_margin_bottom).present? ? yield(:title_margin_bottom).to_i : nil,
+            } %>
+          </div>
+
+          <% if yield(:page_full_width).blank? %>
+            <div class="govuk-grid-column-one-third app-grid-column--align-right">
+              <%= yield(:title_side) %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </main>
+  </div>
+
+  <%= render "govuk_publishing_components/components/layout_footer", {
+    navigation: [
+      {
+        title: "Support and feedback",
+        items: [
+          {
+            href: Plek.external_url_for("support"),
+            text: "Raise a support request",
+          },
+          {
+            href: "https://www.gov.uk/government/content-publishing",
+            text: "How to write, publish, and improve content",
+          },
+          {
+            href: "https://status.publishing.service.gov.uk/",
+            text: "Check if publishing apps are working or if there’s any maintenance planned",
+          },
+        ],
+      },
+    ],
+  } %>
+<% end %>

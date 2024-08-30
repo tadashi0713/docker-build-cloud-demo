@@ -1,0 +1,2 @@
+module Edition::Scopes
+end

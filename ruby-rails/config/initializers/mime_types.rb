@@ -1,0 +1,31 @@
+# Be sure to restart your server when you modify this file.
+
+# Add new mime types for use in respond_to blocks:
+# Mime::Type.register "text/richtext", :rtf
+
+Mime::Type.unregister :html
+Mime::Type.register "text/html", :html, %w[application/xhtml+xml application/vnd.wap.xhtml+xml], %w[xhtml]
+Mime::Type.register "text/rtf", :rtf
+
+Mime::Type.register "image/jpeg", :jpg, [], %w[jpeg]
+
+Mime::Type.register "application/msword", :doc
+Mime::Type.register "application/msword", :dot
+Mime::Type.register "application/vnd.openxmlformats-officedocument.wordprocessingml.document", :docx
+Mime::Type.register "application/vnd.ms-excel", :xls
+Mime::Type.register "application/vnd.ms-excel", :xlt
+Mime::Type.register "application/vnd.ms-excel.sheet.macroEnabled.12", :xlsm
+Mime::Type.register "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", :xlsx
+Mime::Type.register "application/vnd.ms-powerpoint", :ppt
+Mime::Type.register "application/vnd.openxmlformats-officedocument.presentationml.presentation", :pptx
+
+Mime::Type.register "application/vnd.oasis.opendocument.text", :odt
+Mime::Type.register "application/vnd.oasis.opendocument.spreadsheet", :ods
+
+Mime::Type.register "application/rdf+xml", :rdf
+
+Mime::Type.register "application/dxf", :dxf
+
+Mime::Type.register "application/gml+xml", :gml
+
+Mime::Type.register "image/svg+xml", :svg

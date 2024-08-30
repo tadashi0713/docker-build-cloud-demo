@@ -1,0 +1,2 @@
+class DataMigrationRecord < ApplicationRecord
+end

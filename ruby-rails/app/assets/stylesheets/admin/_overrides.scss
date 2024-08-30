@@ -1,0 +1,34 @@
+.app-c-govuk-table--filterable .govuk-table {
+  table-layout: fixed;
+}
+
+.govuk-table--with-actions {
+  .govuk-table__cell:last-child {
+    text-align: right;
+  }
+}
+
+.govuk-tag--s {
+  @include govuk-font(14, $weight: bold, $line-height: 1);
+}
+
+code {
+  color: govuk-colour("red");
+}
+
+.gem-c-summary-list--with-image {
+  .govuk-summary-list__key {
+    vertical-align: top;
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.app-c-translated-textarea,
+.app-c-translated-input {
+  & > *:first-child > .govuk-form-group {
+    margin-bottom: govuk-spacing(2) !important; // stylelint-disable-line declaration-no-important
+  }
+}

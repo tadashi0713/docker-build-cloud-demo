@@ -1,0 +1,2 @@
+class EditionPolicy < ApplicationRecord
+end
