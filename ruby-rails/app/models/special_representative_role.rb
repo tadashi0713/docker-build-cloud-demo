@@ -1,2 +1,0 @@
-class SpecialRepresentativeRole < Role
-end

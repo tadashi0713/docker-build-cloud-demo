@@ -1,2 +1,0 @@
-class ChiefProfessionalOfficerRole < Role
-end

@@ -1,37 +1,59 @@
 {
-  "name": "nodejs",
+  "name": "root",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
-  "scripts": {
-    "develop": "strapi develop",
-    "start": "strapi start",
-    "build": "strapi build",
-    "strapi": "strapi",
-    "deploy": "strapi deploy"
-  },
-  "devDependencies": {},
-  "dependencies": {
-    "@strapi/strapi": "4.25.9",
-    "@strapi/plugin-users-permissions": "4.25.9",
-    "@strapi/plugin-i18n": "4.25.9",
-    "@strapi/plugin-cloud": "4.25.9",
-    "better-sqlite3": "8.6.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "5.3.4",
-    "styled-components": "5.3.3"
-  },
-  "author": {
-    "name": "A Strapi developer"
-  },
-  "strapi": {
-    "uuid": "b02133b1-18ca-409b-85c0-f84cc76ca4ca"
-  },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
-    "npm": ">=6.0.0"
+    "node": "18 || 20"
   },
-  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"yarn start\" \"yarn start-backend\"",
+    "start": "yarn workspace app start",
+    "start-backend": "yarn workspace backend start",
+    "build:backend": "yarn workspace backend build",
+    "build:all": "backstage-cli repo build --all",
+    "build-image": "yarn workspace backend build-image",
+    "tsc": "tsc",
+    "tsc:full": "tsc --skipLibCheck false --incremental false",
+    "clean": "backstage-cli repo clean",
+    "test": "backstage-cli repo test",
+    "test:all": "backstage-cli repo test --coverage",
+    "test:e2e": "playwright test",
+    "fix": "backstage-cli repo fix",
+    "lint": "backstage-cli repo lint --since origin/master",
+    "lint:all": "backstage-cli repo lint",
+    "prettier:check": "prettier --check .",
+    "new": "backstage-cli new --scope internal"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "plugins/*"
+    ]
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.27.0",
+    "@backstage/e2e-test-utils": "^0.1.1",
+    "@playwright/test": "^1.32.3",
+    "@spotify/prettier-config": "^12.0.0",
+    "concurrently": "^8.0.0",
+    "lerna": "^7.3.0",
+    "node-gyp": "^10.0.0",
+    "prettier": "^2.3.2",
+    "typescript": "~5.4.0"
+  },
+  "resolutions": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  },
+  "prettier": "@spotify/prettier-config",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

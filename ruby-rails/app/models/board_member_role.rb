@@ -1,2 +1,0 @@
-class BoardMemberRole < Role
-end

@@ -1,2 +1,0 @@
-class MilitaryRole < Role
-end

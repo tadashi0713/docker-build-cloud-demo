@@ -1,2 +1,0 @@
-class ChiefScientificAdvisorRole < Role
-end
