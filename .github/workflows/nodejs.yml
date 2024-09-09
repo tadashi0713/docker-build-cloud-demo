@@ -29,5 +29,5 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          file: nodejs
+          context: "{{defaultContext}}:nodejs"
           outputs: 'type=cacheonly'
