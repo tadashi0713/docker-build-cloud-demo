@@ -3,7 +3,7 @@ name: Node.js
 on: push
 
 jobs:
-  without_build_cloud:
+  plain_build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -11,6 +11,19 @@ jobs:
     - uses: docker/build-push-action@v6
       with:
         context: "{{defaultContext}}:nodejs"
+  
+  # Each GitHub repository is only given 10GB of cache space, after which, the oldest entries in the cache are evicted. If your Docker image is reasonably large, or has several layers, you will likely run into this limit and not reap the benefits of effective caching.
+  # GitHub’s cache is only scoped to the development branch running the Docker build. Sharing the cached layers across your organization, or with other build systems, is not possible with this approach.
+  with_gha_cache:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: docker/setup-buildx-action@v3
+    - uses: docker/build-push-action@v6
+      with:
+        context: "{{defaultContext}}:nodejs"
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
 
   with_build_cloud:
     runs-on: ubuntu-latest
