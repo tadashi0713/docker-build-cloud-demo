@@ -1,4 +1,4 @@
-name: Node.js
+name: Build backstage Docker Image
 
 on: push
 
